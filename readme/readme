@@ -1,0 +1,50 @@
+AOSscreen is developed for screening potential Antisense Oligonucleotides (ASOs) candidates that could target provided mRNA 
+Usage:
+ oligo.py [-h] --infile INFILE [--Exclude EXCLUDE]
+
+Store input files in folder path ./input/
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --infile INFILE    Fasta file of the transcript to generate ASOs 
+  --Exclude EXCLUDE  Text file with accession numbers to ignore during off-target search with
+                     blast  (Usually the mRNA for which the ASOs are generated)
+## Dependencies
+NCBI Blast: https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
+
+## Filtering criteria for ASOs
+GC percentage : 40 to 65%
+Hairpin bends: Minimum 4
+MFE: <0
+Single strand RNA: Minimum 4 consecutive bases
+Offtarget : None 
+Mouse homology: If found
+population frequency: <0.05
+
+## To filter vcfs, 
+Vcf file downloaded from dbSNP (db/dbsnp/00-All.vcf) is filtered for gene CDC34 (db/dbsnp/CDC34.vcf)
+
+## To find off-targets blast
+## Trimming the header information in fasta, so that it can be formatted with blast
+sed -e 's/\(^.*\)\|OTT.*\|OTT.*\|\(.*\)\|[0-9]*\|.*\|/\1\|\2/g'  gencode.v40.transcripts.fa   > hg38.trans.fa
+sed -e 's/^\(.\{50\}\).*/\1/' hg38.trans.fa > GRCH38.trans.fa
+sed -e 's/^\(.\{50\}\).*/\1/' gencode.vM29.transcripts.fa > M29.transcripts.fa
+
+## Formating database
+# The source link for fasta sequences that are downladed to generate blast databases id given below  under header source file
+makeblastdb -in GRCH38.trans.fa -out hg38.trans  -dbtype nucl -parse_seqids
+## cdc34_nonoverlap.fa: Non overlapping regions of CDC34 transcript ENST00000606065
+# The transcripts of CDC34 are excluded (using option --exclude) in blast off-target analysis except the non-overlapping regions of the transcripts.
+# Nonoverlapping regions of transcripts of CDC34 in fasta format are fetched from ENSEMBL database and formatted with makeblastdb and merged with the mRNA database. 
+makeblastdb -in cdc34_nonoverlap.fa -out cdc34_nonoverlap -dbtype nucl -parse_seqids
+## Merging 2 databases
+blastdb_aliastool -dblist "hg38.trans cdc34_nonoverlap" -dbtype nucl -out hg38_cd34nonoverlap.trans -title "hg38_cd34nonoverlap"
+## To find homology with mouse mRNAs
+makeblastdb -in M29.transcripts.fa -out M29.trans my_db = "db/mouse/M29trans" 
+  -dbtype nucl -parse_seqids
+## source file
+# The source link for fasta sequences that are downladed to generate blast databases id given below  under header source file
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_40/gencode.v40.transcripts.fa.gz
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M29/gencode.vM29.transcripts.fa.gz
+
+
