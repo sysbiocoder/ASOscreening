@@ -50,19 +50,19 @@ def getsnp(oname,narr,oarr,gs,ge,s2,e2):
             csnpstr=[]
             k=1
             for l in range(len(ref)):
-                for r in range(len(cs)):
-                    if(cstart[l] in range(cs[r],cd[r])):
-                        k=r
-                        break
+                #for r in range(len(cs)):
+                #    if(cstart[l] in range(cs[r],cd[r])):
+                #        k=r
+                #        break
 
-                #if(cstart[l] in range(1,87) ):
-                #    k=0
-                #if(cstart[l] in range(88,185) ):
-                #    k=1
-                #if(cstart[l] in range(186,722) ):
-                #    k=2
-                #if(cstart[l] in range(723,1043) ):
-                #    k=3
+                if(cstart[l] in range(1,87) ):
+                    k=0
+                if(cstart[l] in range(88,185) ):
+                    k=1
+                if(cstart[l] in range(186,722) ):
+                    k=2
+                if(cstart[l] in range(723,1043) ):
+                    k=3
                 if ((int(gstart[l]) >= int(Es[k])) & (int(gend[l]) <= int(Ed[k])) & (int(snppos[l]) <= int(Ed[k]))):
                     csnppos=cend[l]-(gend[l]-int(snppos[l]))
                     csnpstr.append("c."+ref[l]+str(csnppos)+alt[l])
