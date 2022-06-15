@@ -48,38 +48,55 @@ def getsnp(oname,narr,oarr,gs,ge,s2,e2):
         if flag >= 1:
             #print("\n",oname[i], oarr[i],gstart,gend,cstart,cend, resgp,snppos, ref,alt)
             csnpstr=[]
-            k=1
+            k=3
             for l in range(len(ref)):
-                #for r in range(len(cs)):
-                #    if(cstart[l] in range(cs[r],cd[r])):
-                #        k=r
-                #        break
+                for r in reversed(range(len(Ed))):
+                    if(gend[l] in range(Es[r],Ed[r])):
+                        k=r
+                        #print(k)
 
-                if(cstart[l] in range(1,87) ):
-                    k=0
-                if(cstart[l] in range(88,185) ):
-                    k=1
-                if(cstart[l] in range(186,722) ):
-                    k=2
-                if(cstart[l] in range(723,1043) ):
-                    k=3
-                if ((int(gstart[l]) >= int(Es[k])) & (int(gend[l]) <= int(Ed[k])) & (int(snppos[l]) <= int(Ed[k]))):
+                #if(cstart[l] in range(1,87) ):
+                #    k=0
+                #if(cstart[l] in range(88,185) ):
+                #    k=1
+                #if(cstart[l] in range(186,722) ):
+                #    k=2
+                #if(cstart[l] in range(723,1043) ):
+                #    k=3
+                #print(k)
+                if ((int(gstart[l]) >= int(Es[k])) & (int(gend[l]) <= int(Ed[k])) & (int(snppos[l]) in range(int(Es[k]),int(Ed[k])))):
                     csnppos=cend[l]-(gend[l]-int(snppos[l]))
                     csnpstr.append("c."+ref[l]+str(csnppos)+alt[l])
-                elif ((int(gstart[l]) <= int(Es[k])) & (int(gend[l]) <= int(Ed[k]) ) & (int(snppos[l]) >= int(Es[k]))) :
+                    #break
+                elif ((int(gstart[l]) <= int(Es[k])) & (int(gend[l]) <= int(Ed[k]) ) & (int(snppos[l]) in range(int(Es[k]),int(Ed[k])))):
                     csnppos=int(cend[l])-(gend[l]-int(snppos[l]))
-                    csnpstr.append("c."+ref[l]+str(csnppos)+alt[l])
+                    csnpstr.append("c."+str(csnppos)+ref[l]+">"+alt[l])
+                    #break
                             #print(str(oname[i])+"\t"+ str(cend[l])+"\t"+ str(cstart[l])+"\t"+ str(gstart[l]) +"\t"+ str(gend[l]) +"\t"+str(snppos[l]))
                             #64 83 535904 536242  536154 535837-535923 536243
-                elif ((int(snppos[l]) <= int(Es[k])) & (int(gstart[l]) <= int(Es[k])) & int(gend[l])< int(Ed[k])):
-                    csnppos=int(cstart[l])+(int(snppos[l])-int(gstart[l]))
+                            #Es=[535837,536243,537013,541346] # Exon start position
+                            #Ed=[535923,536340,537147,542087] #Exon end position
+                            #cs= [1,88,186,723]# Exon start position
+                            #cd= [87,185,722,1043] # Exon end position
+                elif ((int(snppos[l]) <= int(Ed[k-1])) & (int(gstart[l]) < int(Es[k])) & int(gend[l]) < int(Ed[k])):
+                    if(snppos[l] in range(Es[k-1],Ed[k-1])):
+                        csnppos=int(cstart[l])+(int(snppos[l])-int(gstart[l]))
+                        #print(Ed[k-1],Es[k-1],Es[k],Ed[k],cstart[l],gstart[l],gend[l],k,snppos[l])
+                    else:
+                        print(oname[i],Ed[k-1],Es[k-1],Es[k],Ed[k],cstart[l],gstart[l],gend[l],k,snppos[l])
+                        csnppos=int(snppos[l])-int(Es[k])
                     csnpstr.append("c."+ref[l]+str(csnppos)+alt[l])
+                    #print(k)
+                        
+                    #break
                 else:
                     print("no snp")
+                    
             pop.append(resgp)
             csnp.append(csnpstr)
             #print(csnp)
             flag=0
+            
         else:
             csnp.append('NA')
             pop.append('NA')
