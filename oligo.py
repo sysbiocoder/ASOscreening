@@ -141,7 +141,7 @@ if __name__ == '__main__':
     ## Filtered dataframe
     dfiltered_path='output/oligo_analysis_filtered.out'
     cf.check_file(dfiltered_path)
-    df.to_csv(dfiltered_path, sep='\t')
+    df_filtered.to_csv(dfiltered_path, sep='\t')
 
 
 
