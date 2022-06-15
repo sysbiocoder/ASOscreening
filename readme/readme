@@ -13,7 +13,7 @@ optional arguments:
 NCBI Blast: https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
 
 ## Filtering criteria for ASOs
-GC percentage : 40 to 65%
+GC percentage : 45 to 65%
 Hairpin bends: Minimum 4
 MFE: <0
 Single strand RNA: Minimum 4 consecutive bases
