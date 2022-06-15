@@ -18,8 +18,12 @@ Hairpin bends: Minimum 4
 MFE: <0
 Single strand RNA: Minimum 4 consecutive bases
 Offtarget : None 
+
+## Other informations
 Mouse homology: If found
 population frequency: <0.05
+Melting temperature
+Molecular weight
 
 ## To filter vcfs, 
 Vcf file downloaded from dbSNP (db/dbsnp/00-All.vcf) is filtered for gene CDC34 (db/dbsnp/CDC34.vcf)
