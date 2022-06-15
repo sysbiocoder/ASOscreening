@@ -13,6 +13,7 @@ Example: python oligo.py --infile input.fa --Exclude neg_gi
                   
 ## Dependencies
 NCBI Blast: https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
+Download the executable and set the directory path in scripts blastcall.py and mousehomo.py
 Biopython: 1.79
 ViennaRNA 2.0 :https://www.tbi.univie.ac.at/RNA/download/sourcecode/2_5_x/ViennaRNA-2.5.1.tar.gz
 
