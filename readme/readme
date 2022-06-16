@@ -2,7 +2,7 @@ AOSscreen is developed for screening potential Antisense Oligonucleotides (ASOs)
 Usage:
  oligo.py [-h] --infile INFILE [--Exclude EXCLUDE]
 
-Store input files in folder path ./input/
+Store input files in folder path ASOscreening/input/ 
 
 optional arguments:
   -h, --help         show this help message and exit
