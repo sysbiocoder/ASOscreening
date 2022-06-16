@@ -8,7 +8,7 @@ optional arguments:
   -h, --help         show this help message and exit
   --infile INFILE    Fasta file of the transcript to generate ASOs 
   --Exclude EXCLUDE  Text file with accession numbers to ignore during off-target search with
-                     blast  (Usually the mRNA for which the ASOs are generated)
+                     blast  (Usually the mRNA for which the ASOs are generated and it should be the id used in the blastdb)
 Example: python oligo.py --infile input.fa --Exclude neg_gi   
                   
 ## Dependencies
