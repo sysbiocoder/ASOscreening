@@ -13,9 +13,20 @@ Example: python oligo.py --infile input.fa --Exclude neg_gi
                   
 ## Dependencies
 NCBI Blast: https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
+and store in path ASOscreening/tools/ncbi-blast-2.13.0+/bin/blastn"
 Download the executable and set the directory path in scripts blastcall.py and mousehomo.py
 Biopython: 1.79
 ViennaRNA 2.0 :https://www.tbi.univie.ac.at/RNA/download/sourcecode/2_5_x/ViennaRNA-2.5.1.tar.gz
+
+
+## Store blast databases files and to format database see below
+ "ASOscreening/db/mouse/M29.trans*"
+ "ASOscreening/db/human/hg38.trans*"
+ "ASOscreening/db/human/hg38_cd34nonoverlap.trans*"
+ ## Store snp databases files 
+ "ASOscreening/db/dbsnp/CDC34.vcf"
+ "ASOscreening/db/dbsnp/00-All.vcf"
+
 
 ## Filtering criteria for ASOs
 GC percentage : 45 to 65%
@@ -31,7 +42,7 @@ Melting temperature
 Molecular weight
 
 ## To filter vcfs, 
-Vcf file downloaded from dbSNP (db/dbsnp/00-All.vcf) is filtered for gene CDC34 (db/dbsnp/CDC34.vcf)
+Vcf file downloaded from dbSNP (ASOscreening/db/dbsnp/00-All.vcf) is filtered for gene CDC34 (ASOscreening/db/dbsnp/CDC34.vcf)
 
 ## To find off-targets blast
 ## Trimming the header information in fasta, so that it can be formatted with blast
@@ -49,11 +60,10 @@ makeblastdb -in cdc34_nonoverlap.fa -out cdc34_nonoverlap -dbtype nucl -parse_se
 ## Merging 2 databases
 blastdb_aliastool -dblist "hg38.trans cdc34_nonoverlap" -dbtype nucl -out hg38_cd34nonoverlap.trans -title "hg38_cd34nonoverlap"
 ## To find homology with mouse mRNAs
-makeblastdb -in M29.transcripts.fa -out M29.trans my_db = "db/mouse/M29trans" 
-  -dbtype nucl -parse_seqids
+makeblastdb -in M29.transcripts.fa -out M29.trans -dbtype nucl -parse_seqids
 ## source file
 # The source link for fasta sequences that are downladed to generate blast databases id given below  under header source file
 https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_40/gencode.v40.transcripts.fa.gz
 https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M29/gencode.vM29.transcripts.fa.gz
 
-
+ 
